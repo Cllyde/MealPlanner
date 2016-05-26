@@ -20,6 +20,8 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.ActionLink("x", "RemovePlanMeal", new { id = @item.ID }, new { @class = "btn btn-danger btn-xs"})
+            @*<span class="btn btn-danger btn-sm">&times;</span>*@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
@@ -32,3 +34,5 @@
 }
 
 </table>
+
+@Html.ActionLink("Create New Plan", "Plan", new { newPlan = true }, new { @class = "btn btn-primary btn-large" })

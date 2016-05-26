@@ -124,25 +124,60 @@ namespace MealPlanner.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult Plan()
+        public ActionResult Plan(bool? newPlan = null)
         {
-            var allMeals = db.Meals.ToList();
-            if (allMeals.Count < 14)
+            if (!WeHaveEnoughMeals())
             {
                 return RedirectToAction("Error", "Meals", new { errorMessage = "You need to create at least 14 meals before using the planner." });
             }
 
-            Random r = new Random();
-            List<Meal> meals = new List<Meal>();
-
-            while (meals.Count < 14)
+            if(_meals.Count == 0)
             {
-                List<Meal> availableMeals = allMeals.Except(meals).ToList();
-                Meal randomMeal = availableMeals[r.Next(0, availableMeals.Count - 1)];
-                meals.Add(randomMeal);
+                PopulateMeals();
+            }
+            else if (newPlan.HasValue && newPlan.Value == true)
+            {
+                PopulateMeals();
             }
 
-            return View(meals);
+            return View(_meals);
+        }
+
+        public ActionResult RemovePlanMeal(int id)
+        {
+            var allMeals = db.Meals.ToList();
+            var availableMeals = allMeals.Where(am => _meals.FirstOrDefault(m => m.ID == am.ID) == null).ToList();
+            var selectedMeal = _meals.Find(x => x.ID == id);
+            _meals.Remove(selectedMeal);
+            Random r = new Random();
+            _meals.Add(availableMeals[r.Next(0, availableMeals.Count - 1)]);
+            return RedirectToAction("Plan", _meals);
+        }
+
+        static List<Meal> _meals = new List<Meal>();
+
+        private bool WeHaveEnoughMeals()
+        {
+            var allMeals = db.Meals.ToList();
+            if (allMeals.Count < 14)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private void PopulateMeals()
+        {
+            var allMeals = db.Meals.ToList();
+            Random r = new Random();
+            _meals = new List<Meal>();
+
+            while (_meals.Count < 14)
+            {
+                List<Meal> availableMeals = allMeals.Except(_meals).ToList();
+                Meal randomMeal = availableMeals[r.Next(0, availableMeals.Count - 1)];
+                _meals.Add(randomMeal);
+            }
         }
 
         public ActionResult Error(string errorMessage)
