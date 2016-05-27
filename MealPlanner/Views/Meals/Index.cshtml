@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<MealPlanner.Models.Meal>
 
 @{
-    ViewBag.Title = "Meals - Index";
+    ViewBag.Title = "Meals - List";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>Meals - List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-info" })
 </p>
 <table class="table">
     <tr>
@@ -41,9 +41,9 @@
             @Html.DisplayFor(modelItem => item.Url)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class="btn btn-xs btn-info" })
-            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-xs btn-warning" })
-            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-xs btn-danger" })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class="btn btn-sm btn-info" })
+            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-sm btn-warning" })
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-sm btn-danger" })
         </td>
     </tr>
 }

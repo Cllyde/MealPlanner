@@ -3,19 +3,26 @@
 }
 
 <div class="jumbotron">
-    <h1>MP</h1>
-    @*<p class="lead">Meal planner allows you to create and save meals and generate a weekly meal plan from your saved meals.</p>*@
+    <h1>Meal Planner</h1>
+    <p class="lead">Meal planner allows you to create and save meals and generate a weekly meal plan from your saved meals.</p>
 </div>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
+        <h2>Meals List</h2>
+        <p>View the list of all meals that have already been created.</p>
+        <p>@Html.ActionLink("Meals List", "Index", "Meals", new { area = "" }, new { @class = "btn btn-info" })</p>
+    </div>
+    <hr />
+    <div class="col-md-4">
         <h2>Create meals</h2>
         <p>Create meals by entering names, ingredients, directions, and an optional URL to where the meal was found.</p>
-        <p>@Html.ActionLink("Create Meals", "Create", "Meals", new { area = "" }, new { @class = "btn btn-default" })</p>
+        <p>@Html.ActionLink("Create Meals", "Create", "Meals", new { area = "" }, new { @class = "btn btn-info" })</p>
     </div>
-    <div class="col-md-6">
+    <hr />
+    <div class="col-md-4">
         <h2>Get weekly plan</h2>
         <p>Use the meals you've entered to generate a meal plan for up to 7 days.</p>
-        <p>@Html.ActionLink("Create Plan", "Plan", "Meals", new { area = "" }, new { @class = "btn btn-default" })</p>
+        <p>@Html.ActionLink("Create Plan", "Plan", "Meals", new { area = "" }, new { @class = "btn btn-info" })</p>
     </div>
 </div>
