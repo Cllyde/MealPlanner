@@ -28,7 +28,7 @@
             @Html.DisplayFor(modelItem => item.Url)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id=item.ID })
+            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-xs btn-warning" })
         </td>
     </tr>
 }

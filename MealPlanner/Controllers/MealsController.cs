@@ -126,7 +126,7 @@ namespace MealPlanner.Controllers
 
         public ActionResult Plan(bool? newPlan = null)
         {
-            if (!WeHaveEnoughMeals())
+            if (!DoWeHaveAtLeast14Meals())
             {
                 return RedirectToAction("Error", "Meals", new { errorMessage = "You need to create at least 14 meals before using the planner." });
             }
@@ -156,7 +156,7 @@ namespace MealPlanner.Controllers
 
         static List<Meal> _meals = new List<Meal>();
 
-        private bool WeHaveEnoughMeals()
+        private bool DoWeHaveAtLeast14Meals()
         {
             var allMeals = db.Meals.ToList();
             if (allMeals.Count < 14)

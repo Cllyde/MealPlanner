@@ -14,12 +14,12 @@
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Ingredients)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Directions)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Url)
         </th>
@@ -31,19 +31,19 @@
         <th>
             @Html.DisplayFor(modelItem => item.Name)
         </th>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.IngredientsDisplay)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DirectionsDisplay)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Url)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class="btn btn-xs btn-info" })
+            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-xs btn-warning" })
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-xs btn-danger" })
         </td>
     </tr>
 }
