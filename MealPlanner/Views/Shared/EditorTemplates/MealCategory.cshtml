@@ -1,0 +1,10 @@
+﻿@model MealCategory
+@using MealPlanner.Models
+<div class="btn-group" data-toggle="buttons">
+@foreach (var value in Enum.GetValues(typeof(MealCategory)))
+{
+    <label class="btn btn-success btn-sm">
+        <input type="radio" name="MealCategory" value="@value" /> @value
+    </label>
+}
+</div>

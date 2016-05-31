@@ -17,6 +17,7 @@ namespace MealPlanner.Models
     
         public MealPlannerContext() : base("name=MealPlannerContext")
         {
+            Database.SetInitializer<MealPlannerContext>(null);
         }
 
         public System.Data.Entity.DbSet<MealPlanner.Models.Meal> Meals { get; set; }

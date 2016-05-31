@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -10,13 +11,22 @@ namespace MealPlanner.Models
     public class Meal
     {
         public int ID { get; set; }
+
+        [Required]
         public string Name { get; set; }
+
         [DataType(DataType.MultilineText)]
         public string Ingredients { get; set; }
+
         [DataType(DataType.MultilineText)]
         public string Directions { get; set; }
+
         [DataType(DataType.Url)]
         public string Url { get; set; }
+
+        [Required]
+        [DisplayName("Meal Category")]
+        public MealCategory MealCategory { get; set; }
 
         [NotMapped]
         public string IngredientsDisplay

@@ -122,8 +122,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605231640521_InitialCreate.cs" />
+    <Compile Include="Migrations\201605231640521_InitialCreate.Designer.cs">
+      <DependentUpon>201605231640521_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605312042384_MealCategory.cs" />
+    <Compile Include="Migrations\201605312042384_MealCategory.Designer.cs">
+      <DependentUpon>201605312042384_MealCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CONSTANTS.cs" />
     <Compile Include="Models\Meal.cs" />
+    <Compile Include="Models\MealCategory.cs" />
     <Compile Include="Models\MealPlannerContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -134,7 +144,9 @@
     </Content>
     <Content Include="Content\Default - bootstrap.css" />
     <Content Include="Content\Cerulean - bootstrap.css" />
-    <Content Include="favicon.ico" />
+    <Content Include="favicon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -173,6 +185,7 @@
     <Content Include="Views\Meals\Index.cshtml" />
     <Content Include="Views\Meals\Plan.cshtml" />
     <Content Include="Views\Meals\Error.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\MealCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -183,9 +196,20 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201605231640521_InitialCreate.resx">
+      <DependentUpon>201605231640521_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605312042384_MealCategory.resx">
+      <DependentUpon>201605312042384_MealCategory.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

@@ -17,7 +17,7 @@ namespace MealPlanner.Controllers
         // GET: Meals
         public ActionResult Index()
         {
-            return View(db.Meals.ToList());
+            return View(db.Meals.OrderBy(m => m.Name) .ToList());
         }
 
         // GET: Meals/Details/5
@@ -46,7 +46,7 @@ namespace MealPlanner.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Ingredients,Directions,Url")] Meal meal)
+        public ActionResult Create([Bind(Include = "ID,Name,Ingredients,Directions,MealCategory,Url")] Meal meal)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace MealPlanner.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Ingredients,Directions,Url")] Meal meal)
+        public ActionResult Edit([Bind(Include = "ID,Name,Ingredients,Directions,MealCategory,Url")] Meal meal)
         {
             if (ModelState.IsValid)
             {
