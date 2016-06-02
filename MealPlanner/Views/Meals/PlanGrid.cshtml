@@ -1,0 +1,11 @@
+﻿@model MealPlanner.Models.MealGridViewModel
+@{
+    ViewBag.Title = "Plan Grid";
+}
+
+<h2>Plan Grid</h2>
+
+@foreach (var mealsForADay in Model.DailyMeals)
+{
+    @Html.DisplayFor(model => mealsForADay)
+}

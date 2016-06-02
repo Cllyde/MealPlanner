@@ -1,0 +1,19 @@
+﻿@model MealPlanner.Models.MealsForADay
+
+@{ var actionParams = new { dayName = string.Empty, mealCategory = string.Empty }; }
+
+<div class="row">
+    <h3>@Model.DayName</h3>
+    <div class="col-md-3 col-sm-3">
+        @Html.DisplayFor(model => @Model.Breakfast, new { dayName = Model.DayName, mealCategory = "Breakfast" })
+    </div>
+    <div class="col-md-3 col-sm-3">
+        @Html.DisplayFor(model => @Model.Lunch, new { dayName = Model.DayName, mealCategory = "Lunch" })
+    </div>
+    <div class="col-md-3 col-sm-3">
+        @Html.DisplayFor(model => @Model.Dinner, new { dayName = Model.DayName, mealCategory = "Dinner" })
+    </div>
+    <div class="col-md-3 col-sm-3">
+        @Html.DisplayFor(model => @Model.Side, new { dayName = Model.DayName, mealCategory = "Side" })
+    </div>
+</div>

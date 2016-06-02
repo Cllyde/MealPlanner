@@ -1,0 +1,22 @@
+﻿@model MealPlanner.Models.Meal
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="btn-group pull-right">
+            @{ var actionParams = new { dayName = @ViewBag.dayName, mealCategory = @ViewBag.mealCategory }; }
+            @if (@Model == null)
+            {
+                @Html.ActionLink("+", "AddMealToPlan", actionParams, new { @class = "btn btn-xs btn-success" })
+            }
+            else
+            {
+                @Html.ActionLink("Swap", "SwapMealItem", actionParams, new { @class = "btn btn-xs btn-info" })
+                @Html.ActionLink(HttpUtility.HtmlDecode("&times;"), "RemoveMealItem", actionParams, new { @class = "btn btn-xs btn-danger" })
+            }
+        </div>
+        @ViewBag.mealCategory
+    </div>
+    <div class="panel-body">
+        @Html.DisplayFor(model => @Model.Name)
+    </div>
+</div>
