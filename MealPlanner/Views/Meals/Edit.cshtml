@@ -70,4 +70,9 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $('input:radio[name="MealCategory"][value="@Model.MealCategory"]').parent().prop('active', true).click();
+        })
+    </script>
 }
