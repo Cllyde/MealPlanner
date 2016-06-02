@@ -134,6 +134,7 @@
     <Compile Include="Models\CONSTANTS.cs" />
     <Compile Include="Models\Meal.cs" />
     <Compile Include="Models\MealCategory.cs" />
+    <Compile Include="Models\MealGridViewModel.cs" />
     <Compile Include="Models\MealPlannerContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -187,6 +188,7 @@
     <Content Include="Views\Meals\Plan.cshtml" />
     <Content Include="Views\Meals\Error.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MealCategory.cshtml" />
+    <Content Include="Views\Meals\PlanGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
