@@ -10,6 +10,11 @@ namespace MealPlanner.Models
 {
     public class Meal
     {
+        public Meal()
+        {
+            MealCategory = MealCategory.Breakfast;
+        }
+
         public int ID { get; set; }
 
         [Required]

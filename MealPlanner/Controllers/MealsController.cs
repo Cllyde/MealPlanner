@@ -51,7 +51,8 @@ namespace MealPlanner.Controllers
         // GET: Meals/Create
         public ActionResult Create()
         {
-            return View();
+            Meal m = new Meal();
+            return View(m);
         }
 
         // POST: Meals/Create
@@ -175,20 +176,27 @@ namespace MealPlanner.Controllers
         public ActionResult AddMealToPlan(string dayName, string mealCategory)
         {
             var dailyMeals = _gridVm.DailyMeals.First(dm => dm.DayName == dayName);
-            switch (mealCategory)
+            try
             {
-                case "Breakfast":
-                    dailyMeals.Breakfast = GetRandomMealByCategory(MealCategory.Breakfast);
-                    break;
-                case "Lunch":
-                    dailyMeals.Lunch = GetRandomMealByCategory(MealCategory.Lunch);
-                    break;
-                case "Dinner":
-                    dailyMeals.Dinner = GetRandomMealByCategory(MealCategory.Dinner);
-                    break;
-                case "Side":
-                    dailyMeals.Side = GetRandomMealByCategory(MealCategory.Side);
-                    break;
+                switch (mealCategory)
+                {
+                    case "Breakfast":
+                        dailyMeals.Breakfast = GetRandomMealByCategory(MealCategory.Breakfast);
+                        break;
+                    case "Lunch":
+                        dailyMeals.Lunch = GetRandomMealByCategory(MealCategory.Lunch);
+                        break;
+                    case "Dinner":
+                        dailyMeals.Dinner = GetRandomMealByCategory(MealCategory.Dinner);
+                        break;
+                    case "Side":
+                        dailyMeals.Side = GetRandomMealByCategory(MealCategory.Side);
+                        break;
+                }
+            }
+            catch (DataException ex)
+            {
+                return ShowErrorInView(ex.Message);
             }
             return RedirectToAction("PlanGrid");
         }
@@ -196,20 +204,27 @@ namespace MealPlanner.Controllers
         public ActionResult SwapMealItem(string dayName, string mealCategory)
         {
             var dailyMeals = _gridVm.DailyMeals.First(dm => dm.DayName == dayName);
-            switch (mealCategory)
+            try
             {
-                case "Breakfast":
-                    dailyMeals.Breakfast = GetRandomMealNotInCollection(MealCategory.Breakfast, new List<Meal> { dailyMeals.Breakfast });
-                    break;
-                case "Lunch":
-                    dailyMeals.Lunch = GetRandomMealNotInCollection(MealCategory.Lunch, new List<Meal> { dailyMeals.Lunch });
-                    break;
-                case "Dinner":
-                    dailyMeals.Dinner = GetRandomMealNotInCollection(MealCategory.Dinner, new List<Meal> { dailyMeals.Dinner });
-                    break;
-                case "Side":
-                    dailyMeals.Side = GetRandomMealNotInCollection(MealCategory.Side, new List<Meal> { dailyMeals.Side });
-                    break;
+                switch (mealCategory)
+                {
+                    case "Breakfast":
+                        dailyMeals.Breakfast = GetRandomMealNotInCollection(MealCategory.Breakfast, new List<Meal> { dailyMeals.Breakfast });
+                        break;
+                    case "Lunch":
+                        dailyMeals.Lunch = GetRandomMealNotInCollection(MealCategory.Lunch, new List<Meal> { dailyMeals.Lunch });
+                        break;
+                    case "Dinner":
+                        dailyMeals.Dinner = GetRandomMealNotInCollection(MealCategory.Dinner, new List<Meal> { dailyMeals.Dinner });
+                        break;
+                    case "Side":
+                        dailyMeals.Side = GetRandomMealNotInCollection(MealCategory.Side, new List<Meal> { dailyMeals.Side });
+                        break;
+                }
+            }
+            catch (DataException ex)
+            {
+                return ShowErrorInView(ex.Message);
             }
             return RedirectToAction("PlanGrid");
         }
@@ -279,6 +294,8 @@ namespace MealPlanner.Controllers
         private Meal GetRandomMealByCategory(MealCategory category)
         {
             var mealsForCategory = db.Meals.Where(m => m.MealCategory == category).ToList();
+            if (mealsForCategory.Count == 0)
+                throw new DataException("There is no meal available for the selected category.");
             Random r = new Random();
             var randomMeal = mealsForCategory[r.Next(mealsForCategory.Count)];
             return randomMeal;
@@ -288,10 +305,12 @@ namespace MealPlanner.Controllers
         {
             var mealsForCategory = db.Meals.Where(m => m.MealCategory == category).ToList();
             var mealsNotAlreadyInCollection = new List<Meal>();
+            if (mealsNotAlreadyInCollection.Count == 0)
+                throw new DataException("There are no other meals to swap for in this category.");
             var collectionIds = collection.Select(c => c.ID);
             foreach (var m in mealsForCategory)
             {
-                if(!collectionIds.Contains(m.ID))
+                if (!collectionIds.Contains(m.ID))
                 {
                     mealsNotAlreadyInCollection.Add(m);
                 }
