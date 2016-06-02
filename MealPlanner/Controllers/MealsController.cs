@@ -12,12 +12,20 @@ namespace MealPlanner.Controllers
 {
     public class MealsController : Controller
     {
+        /// <summary>
+        /// Data context for Meal objects.
+        /// </summary>
         private MealPlannerContext db = new MealPlannerContext();
+
+        /// <summary>
+        /// Static field to hold the list of Meal objects in the current plan.
+        /// </summary>
+        private static List<Meal> _meals = new List<Meal>();
 
         // GET: Meals
         public ActionResult Index()
         {
-            return View(db.Meals.OrderBy(m => m.Name) .ToList());
+            return View(db.Meals.OrderBy(m => m.Name).ToList());
         }
 
         // GET: Meals/Details/5
@@ -115,23 +123,19 @@ namespace MealPlanner.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
+        // GET: Meals/Plan/true
+        /// <summary>
+        /// Populates the _meals static field when it is empty or a new plan is requested.
+        /// </summary>
+        /// <param name="newPlan">Whether or not a new plan is requested by the user.</param>
         public ActionResult Plan(bool? newPlan = null)
         {
             if (!DoWeHaveAtLeast14Meals())
             {
-                return RedirectToAction("Error", "Meals", new { errorMessage = "You need to create at least 14 meals before using the planner." });
+                ShowErrorInView("You need to create at least 14 meals before using the planner.");
             }
 
-            if(_meals.Count == 0)
+            if (_meals.Count == 0)
             {
                 PopulateMeals();
             }
@@ -143,6 +147,11 @@ namespace MealPlanner.Controllers
             return View(_meals);
         }
 
+        // POST: Meals/RemovePlanMeal/5
+        /// <summary>
+        /// Removes the Meal with the specified ID fromt he _meals static field, and replaces it with a new random Meal.
+        /// </summary>
+        /// <param name="id">The ID of the Meal object to remove from _meals.</param>
         public ActionResult RemovePlanMeal(int id)
         {
             var allMeals = db.Meals.ToList();
@@ -154,8 +163,21 @@ namespace MealPlanner.Controllers
             return RedirectToAction("Plan", _meals);
         }
 
-        static List<Meal> _meals = new List<Meal>();
+        /// <summary>
+        /// Shows the error message on the error view.
+        /// </summary>
+        /// <param name="errorMessage">The message to show.</param>
+        /// <returns></returns>
+        public ActionResult Error(string errorMessage)
+        {
+            ViewBag.ErrorMessage = errorMessage;
+            return View();
+        }
 
+        /// <summary>
+        /// Checks the data context to see if we have at least 14 meals, 
+        /// which is the minimum amount to create a plan currently.
+        /// </summary>
         private bool DoWeHaveAtLeast14Meals()
         {
             var allMeals = db.Meals.ToList();
@@ -166,6 +188,9 @@ namespace MealPlanner.Controllers
             return true;
         }
 
+        /// <summary>
+        /// Re-populates the _meals static field with a new randomized list of 14 Meal objects from the data context.
+        /// </summary>
         private void PopulateMeals()
         {
             var allMeals = db.Meals.ToList();
@@ -180,10 +205,18 @@ namespace MealPlanner.Controllers
             }
         }
 
-        public ActionResult Error(string errorMessage)
+        private ActionResult ShowErrorInView(string message)
         {
-            ViewBag.ErrorMessage = errorMessage;
-            return View();
+            return RedirectToAction("Error", "Meals", new { errorMessage = message });
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
