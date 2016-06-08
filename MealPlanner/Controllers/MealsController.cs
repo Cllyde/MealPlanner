@@ -92,7 +92,7 @@ namespace MealPlanner.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Ingredients,Directions,MealCategory,Url")] Meal meal)
+        public ActionResult Edit([Bind(Include = "ID,Name,Ingredients,Directions,IsBreakfast,IsLunch,IsDinner,IsSide,Url")] Meal meal)
         {
             if (ModelState.IsValid)
             {
@@ -293,7 +293,8 @@ namespace MealPlanner.Controllers
 
         private Meal GetRandomMealByCategory(MealCategory category)
         {
-            var mealsForCategory = db.Meals.Where(m => m.MealCategory == category).ToList();
+            var mealsForCategory = db.Meals.ToList().Where(m => MealMatchesCategory(m, category)).ToList();
+
             if (mealsForCategory.Count == 0)
                 throw new DataException("There is no meal available for the selected category.");
             Random r = new Random();
@@ -301,9 +302,24 @@ namespace MealPlanner.Controllers
             return randomMeal;
         }
 
+        private bool MealMatchesCategory(Meal meal, MealCategory category)
+        {
+            if(meal.IsBreakfast && category == MealCategory.Breakfast
+                || meal.IsLunch && category == MealCategory.Lunch
+                || meal.IsDinner && category == MealCategory.Dinner
+                || meal.IsSide && category == MealCategory.Side)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private Meal GetRandomMealNotInCollection(MealCategory category, IEnumerable<Meal> collection)
         {
-            var mealsForCategory = db.Meals.Where(m => m.MealCategory == category).ToList();
+            var mealsForCategory = db.Meals.Where(m => MealMatchesCategory(m, category)).ToList();
             var mealsNotAlreadyInCollection = new List<Meal>();
             if (mealsNotAlreadyInCollection.Count == 0)
                 throw new DataException("There are no other meals to swap for in this category.");

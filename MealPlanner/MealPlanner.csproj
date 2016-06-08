@@ -130,6 +130,10 @@
     <Compile Include="Migrations\201605312042384_MealCategory.Designer.cs">
       <DependentUpon>201605312042384_MealCategory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606081321574_RadioToCheckbox.cs" />
+    <Compile Include="Migrations\201606081321574_RadioToCheckbox.Designer.cs">
+      <DependentUpon>201606081321574_RadioToCheckbox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CONSTANTS.cs" />
     <Compile Include="Models\Meal.cs" />
@@ -207,6 +211,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605312042384_MealCategory.resx">
       <DependentUpon>201605312042384_MealCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606081321574_RadioToCheckbox.resx">
+      <DependentUpon>201606081321574_RadioToCheckbox.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

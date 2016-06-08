@@ -12,7 +12,6 @@ namespace MealPlanner.Models
     {
         public Meal()
         {
-            MealCategory = MealCategory.Breakfast;
         }
 
         public int ID { get; set; }
@@ -29,9 +28,21 @@ namespace MealPlanner.Models
         [DataType(DataType.Url)]
         public string Url { get; set; }
 
-        [Required]
-        [DisplayName("Meal Category")]
-        public MealCategory MealCategory { get; set; }
+        //[Required]
+        //[DisplayName("Meal Category")]
+        //public MealCategory MealCategory { get; set; }
+
+        [DisplayName("Breakfast")]
+        public bool IsBreakfast { get; set; }
+
+        [DisplayName("Lunch")]
+        public bool IsLunch { get; set; }
+
+        [DisplayName("Dinner")]
+        public bool IsDinner { get; set; }
+
+        [DisplayName("Side")]
+        public bool IsSide { get; set; }
 
         [NotMapped]
         public string IngredientsDisplay
