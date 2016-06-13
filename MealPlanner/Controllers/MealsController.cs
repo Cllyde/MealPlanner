@@ -60,7 +60,7 @@ namespace MealPlanner.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Ingredients,Directions,MealCategory,Url")] Meal meal)
+        public ActionResult Create([Bind(Include = "ID,Name,Ingredients,Directions,IsBreakfast,IsLunch,IsDinner,IsSide,Url")] Meal meal)
         {
             if (ModelState.IsValid)
             {
